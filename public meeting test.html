@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>WA Public Meeting Calendar</title>
+<meta charset="utf-8">
+<style>
+body {font-family:Verdana, Arial, sans-serif;
+      background-color: #00005D;
+}
+#wrapper { background-color: #b3c7e6; 
+           color: #000066;
+           width: 60%;
+		       margin: auto;
+           min-width:850px;
+} 
+header { background-color: #869dc7;
+        color: #00005D; 
+        font-size: 100%; 
+        padding: 0px;
+        height: 100px;
+}
+
+h1 {vertical-align: center}
+
+h2 { color: #869dc7; 
+     font-family: arial, sans-serif;
+     font-size: 95%;
+}
+
+p { font-size: 75%;}
+
+main { padding: 20px 20px 0 20px; 
+       background-color:#ffffff;
+	   color: #000000;
+	   display: block; 
+} 
+main img { margin: 10px;
+             float: right;
+}
+footer {font-size:70%;
+         text-align: center;
+		 clear: right;
+         padding-bottom:20px;
+}
+
+form {font-family: Arial, sans-serif; }
+fieldset { width: 500px;
+         border: 2px ridge #ff0000;
+         padding: 10px;}
+legend { font-family: Georgia, "Times New Roman", serif;
+        font-weight: bold; }
+label { padding-left: 10px; }	
+
+</style> 
+</head>
+
+<body>
+<div id="wrapper">
+  <header>
+    <h1>Public Meeting Calendar<img src="ischool.png" align="right" width="90px" height="90px" alt="iSchool Logo"></h1>
+  </header>
+
+  <main> 
+	<h2>Search for Public Meetings</h2>
+     <form method="get">
+    <label>Search by Date: <input type="text" name="date" id="date"></label><br><br>
+    <label>Search by Zip: <input type="text" name="zip" id="zip" maxlength="15" size="15">
+    </label>
+    </fieldset>
+    <br>
+    <br>
+    <input type="submit" value="Submit"> <input type="reset" value="Reset">
+    </form>
+  <h2>All Incoming Public Meetings List</h2>
+     <table border="1"> 
+   <tr>
+     <th>Agent</th>
+     <th>Title</th>
+     <th>Canceled</th>
+     <th>Date</th>
+     <th>Time</th>
+     <th>Location</th>
+   </tr>
+  <tr>
+     <td>Seattle City Council</td>
+     <td>Planning, Land Use</td>
+     <td>Yes</td>
+     <td>2016-12-20</td>
+     <td>09:30:00</td>
+     <td></td>
+  </tr>
+  <tr>
+     <td>Seattle City Council</td>
+     <td>Council Briefing</td>
+     <td>No</td>
+     <td>2017-1-3</td>
+     <td>09:30:00</td>
+     <td>Council Chambers 600 Fourth Ave. Floor 2 Seattle</td>
+  </tr>
+  <tr>
+     <td>Seattle City Council</td>
+     <td>Education, Equity</td>
+     <td>No</td>
+     <td>2017-1-4</td>
+     <td>14:00:00</td>
+     <td>Council Chambers 600 Fourth Ave. Floor 2 Seattle</td>
+  </tr>
+</table>
+  </main>
+  <footer>Copyright &copy; University of Washington Information School 2017
+  </footer>
+</div>
+</body>
+</html>
+
+
