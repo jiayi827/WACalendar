@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>WA Public Meeting Calendar</title>
+<meta charset="utf-8">
+<script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+</head>
+
+<body>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyALP5fHB0-3CLKdX71BXMw1iz96OR5PCFg",
+    authDomain: "wa-state-calendar.firebaseapp.com",
+    databaseURL: "https://wa-state-calendar.firebaseio.com",
+    storageBucket: "wa-state-calendar.appspot.com",
+    messagingSenderId: "478915424979"
+  };
+  firebase.initializeApp(config);
+
+  var firebaseObj = firebase.database().ref();
+  firebaseObj.child('meeting').on('child_added', function(snapshot) {
+    var data = snapshot.val();
+    var meeting = data.title;
+    document.write(meeting+'\n');
+  });
+</script>
+</body>
+</html>
