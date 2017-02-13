@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>WA Public Meeting Calendar</title>
+    <meta charset="utf-8">
+    <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+
+    <style>
+    body {font-family:Verdana, Arial, sans-serif;
+          background-color: #00005D;
+    }
+    #wrapper { background-color: #b3c7e6; 
+               color: #000066;
+               width: 60%;
+    		       margin: auto;
+               min-width:850px;
+    } 
+    header { background-color: #869dc7;
+            color: #00005D; 
+            font-size: 100%; 
+            padding: 0px;
+            height: 100px;
+    }
+    h1 {
+        padding: 15px 15px 20px 15px;
+      }
+
+    h2 { color: #869dc7; 
+         font-family: arial, sans-serif;
+         font-size: 95%;
+    }
+
+    h3 { color: #00005D;
+        font-family: arial, sans-serif;
+        font-size:90%;
+
+    }
+
+    p { font-size: 75%;}
+
+    main { padding: 20px 20px 0 20px; 
+           background-color:#ffffff;
+    	   color: #000000;
+    	   display: block; 
+    } 
+    main img { margin: 10px;
+                 float: right;
+    }
+    footer {font-size:70%;
+             text-align: center;
+    		 clear: right;
+             padding-bottom:20px;
+    }
+
+    form {font-family: Arial, sans-serif; }
+    fieldset { width: 500px;
+             border: 2px ridge #ff0000;
+             padding: 10px;}
+    legend { font-family: Georgia, "Times New Roman", serif;
+            font-weight: bold; }
+    label { padding-left: 10px; }	
+
+    </style> 
+  </head>
+
+  <body>
+  <div id="wrapper">
+    <header>
+      <h1>Public Meeting Calendar<img src="ischool.png" align="right" width="90px" height="90px" alt="iSchool Logo"></h1>
+    </header>
+
+    <main> 
+    	<h2>Search for Public Meetings</h2>
+<!--         <form action="somewhere.php" method="post">
+        <?php
+            require_once('classes/tc_calendar.php');
+        ?>
+        </form> -->
+
+      <h3>Search By Date</h3>
+
+        <!-- <form action="datepick.php" method="post">
+          <?php
+            echo "From:&nbsp;";
+            require_once('classes/tc_calendar.php');
+
+              $myCalendar = new tc_calendar("date1", true);
+              $myCalendar->setIcon("calendar/images/iconCalendar.gif");
+              $myCalendar->setPath("calendar/");
+              $myCalendar->setYearInterval(2016, 2018);
+              $myCalendar->dateAllow('2016-01-01', '2018-12-31');
+              $myCalendar->setAlignment('left', 'bottom');
+              $myCalendar->setDatePair('date1', 'date2');
+              $myCalendar->writeScript();
+
+            echo "&nbsp;&nbsp; To:&nbsp;"; 
+              $myCalendar = new tc_calendar("date2", true);
+              $myCalendar->setIcon("calendar/images/iconCalendar.gif");
+              $myCalendar->setPath("calendar/");
+              $myCalendar->setYearInterval(2016, 2018);
+              $myCalendar->dateAllow('2016-01-01', '2018-12-31');
+              $myCalendar->setAlignment('left', 'bottom');
+              $myCalendar->setDatePair('date1', 'date2');
+              $myCalendar->writeScript();
+              ?>
+          <br>
+          <input type="submit">
+        </form> -->
+
+
+      <h3>Search by Zip Code</h3>
+
+        <form id="zipForm">
+          Enter Zip Code (e.g. 98115): <input type="number" id="zipSearch"/>
+          <input type="button" value="Submit" onclick="processZipForm();"/>
+        </form>
+
+      <br>
+      <br>
+
+      <h2>Public Meetings List</h2>
+
+      <table id="fullTable" style="width:100%">
+        <tr>
+          <th>Title</th>
+          <th>City</th>
+          <th>Board</th> 
+          <th>Date</th>
+          <th>Time</th>
+          <th>Location</th>
+          <th>Cancelled</th>
+          <th>ContactNo.</th>
+        </tr>
+      </table>
+
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyALP5fHB0-3CLKdX71BXMw1iz96OR5PCFg",
+        authDomain: "wa-state-calendar.firebaseapp.com",
+        databaseURL: "https://wa-state-calendar.firebaseio.com",
+        storageBucket: "wa-state-calendar.appspot.com",
+        messagingSenderId: "478915424979"
+      };
+      firebase.initializeApp(config);
+
+      var today = new Date();
+      var firebaseObj = firebase.database().ref('meeting');
+
+      firebaseObj.orderByChild('date')
+        // .startAt(today)
+        .on('child_added', function(snapshot) {
+          console.log('Meetings from now on', snapshot.val());
+          var data = snapshot.val();
+          var table = document.getElementById("fullTable");
+          var row = table.insertRow(table.length);
+          drawTable(data, row);
+        });
+
+      function processZipForm () {
+        // clear the table
+        var Table = document.getElementById("fullTable");
+        Table.innerHTML = "";
+
+        var zip = document.getElementById("zipSearch").value;
+        firebaseObj.orderByChild('zipcode')
+          .equalTo(98105)
+          .on('child_added', function(snapshot) {
+            console.log('Meetings with zipcode', snapshot.val());
+            var data = snapshot.val();
+            var table = document.getElementById("fullTable");
+            var row = table.insertRow(table.length);
+            drawTable(data, row);
+        });
+      }
+
+      function processDateForm () {
+        // clear the table
+        var Table = document.getElementById("fullTable");
+        Table.innerHTML = "";
+
+        var date1 = document.getElementById("date1").value;
+        var date2 = document.getElementById("date2").value;
+        firebaseObj.orderByChild('date')
+          .startAt(date1)
+          .endAt(date2)
+          .on('child_added', function(snapshot) {
+            console.log('Meetings within this data range', snapshot.val());
+            var data = snapshot.val();
+            var table = document.getElementById("fullTable");
+            var row = table.insertRow(table.length);
+            drawTable(data, row);
+        });
+      }
+
+      function drawTable (data, row) {
+          row.insertCell(0).innerHTML = data.title;
+          row.insertCell(1).innerHTML = data.city;
+          row.insertCell(2).innerHTML = data.board;
+          row.insertCell(3).innerHTML = data.date;
+          row.insertCell(4).innerHTML = data.time;
+          row.insertCell(5).innerHTML = data.location;
+          row.insertCell(6).innerHTML = data.cancelOrNot;
+          row.insertCell(7).innerHTML = data.contactPhone;
+      } 
+
+    </script>
+
+      </main>
+      <footer>Copyright &copy; University of Washington Information School 2017</footer>
+    </div>
+  </body>
+</html>

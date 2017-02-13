@@ -7,6 +7,20 @@
 </head>
 
 <body>
+
+<table id="fullTable" style="width:100%">
+  <tr>
+    <th>Title</th>
+    <th>City</th>
+    <th>Board</th> 
+    <th>Date</th>
+    <th>Time</th>
+    <th>Location</th>
+    <th>Cancelled</th>
+    <th>ContactNo.</th>
+  </tr>
+</table>
+
 <script>
   // Initialize Firebase
   var config = {
@@ -18,11 +32,22 @@
   };
   firebase.initializeApp(config);
 
+
   var firebaseObj = firebase.database().ref();
   firebaseObj.child('meeting').on('child_added', function(snapshot) {
     var data = snapshot.val();
-    var meeting = data.title;
-    document.write(meeting+'\n');
+
+    var table = document.getElementById("fullTable");
+    var row = table.insertRow(table.length);
+
+    row.insertCell(0).innerHTML = data.title;
+    row.insertCell(1).innerHTML = data.city;
+    row.insertCell(2).innerHTML = data.board;
+    row.insertCell(3).innerHTML = data.date;
+    row.insertCell(4).innerHTML = data.time;
+    row.insertCell(5).innerHTML = data.location;
+    row.insertCell(6).innerHTML = data.cancelOrNot;
+    row.insertCell(7).innerHTML = data.contactPhone;
   });
 </script>
 </body>
