@@ -1,5 +1,5 @@
 # Website for Public Meetings in WA State
-Calendar for WA State Public Meetings
+An [OCIO](http://ocio.wa.gov) Project. For setting public meetings data standard in WA State.
 
 ## About This Site
 This website is about public meetings in Washington State, US. We have a public meetings dataset collected from a representative sample in WA state, and a website to present the data. This project is meant to provide more convenient access to public events for WA citizens, so as to encourage social participation in the long run.
