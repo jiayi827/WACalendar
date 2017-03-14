@@ -1,0 +1,86 @@
+
+
+body{
+	font-family: helvetica;
+	line-height: 2em;
+}
+
+.navbar{
+	width: 100%;
+	margin-bottom: 0;
+	position: fixed;
+	z-index: 2;
+	/*opacity: .8;*/
+}
+
+
+.jumbotron{
+	margin-top: 0;
+	max-width: 100%;
+	height:auto;
+	background-image: url(../img/cover.jpg);
+	background-size: cover;
+	background-attachment:fixed;
+	background-position: 0 90%;
+	color: #424242;
+}
+
+.intro{
+	color: #424242;
+	margin-top: 300px;
+	background-color: rgba(255,255,255,0.8);
+	padding: 10px 30px;
+}
+
+.siteinfo{
+	line-height: 1.5em;
+}
+
+.intro a{
+	font-size: 0.8em;
+}
+
+.siteinfo p{
+	font-size:1.2em;
+}
+
+.row{
+	margin-top: 20px;
+}
+
+#map {
+    height: 80vh;
+}
+
+#news{
+    margin-top:60px;
+}
+
+.content{
+    margin-top:20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: #e7e7e7;
+    width:70%;
+    padding:20px;
+    float:none;
+}
+
+.content img{
+    float:left;
+    margin-top:20px;
+    margin-right:30px;   
+}
+
+.content span{
+    color:blue;
+}
+
+footer {
+	margin-left: 50px;
+}
+
+#footnote{
+text-align: center;
+}
