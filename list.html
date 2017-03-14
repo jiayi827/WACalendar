@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<head>
+<title>WA Public Meetings</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <!-- Include all compiled plugins (below), or include individual files as needed -->
+  <script src="css/bootstrap/js/bootstrap.min.js"></script>
+  
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+  <!-- Include Required Prerequisites -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+   
+  <!-- Include Date Range Picker -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+
+  <script src="https://www.gstatic.com/firebasejs/3.6.9/firebase.js"></script>
+</head>
+<style>
+/*  div.side {
+      display: inline-block;
+  }
+  div.side2  {
+    display: inline-block;
+  }
+  #searchCity {
+    margin-left: 300px;
+  }
+  #reset {
+    margin-left: 525px;
+  }*/
+  input[type=search]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+  }
+
+</style>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">WA Public Meetings</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home<span class="sr-only">(current)</span></a></li>
+        <li><a href="map.html">Meetings Map</a></li>
+        <li class="active"><a href="list.html">Meetings List</a></li>
+      </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+    
+
+<body> 
+    <div class="container clearfix"> <!-- content -->
+    
+        <h2><i class="meetingslist" style="color:#55acee"></i>Public Meetings for You</h2>
+        <br>
+        <div class="col-sm-6 col-md-6" style="margin-bottom:1em">
+                <input name="query" type="search" placeholder="E.g. Education" id="searchBoxSubject">
+                <button class="btn btn-primary" id="searchButtonSubject">Search Subject</button>
+        </div>
+        <div class="col-sm-6 col-md-6" style="margin-bottom:1em">
+            <input type="text" id="daterange" type="search" value="03/10/2017 - 03/25/2017"/>
+              <script type="text/javascript">
+              $(function() {
+                  $('input[id="daterange"]').daterangepicker();
+              });
+              </script>
+            <button class="btn btn-primary" id="searchButtonDate">Search Date Range</button>
+        </div>
+        <div class="col-sm-6 col-md-6" id="searchCity" style="margin-bottom:1em">
+            <input name="query" type="search" placeholder="E.g. Seattle" id="searchBoxCity">
+            <button class="btn btn-primary" id="searchButtonCity">Search City</button>
+        </div>  
+        <div id="reset" style="margin-bottom:1em" align="right">
+            <button class="btn btn-success" id="resetButton">Reset</button>
+        </div>       
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <tr>
+                    <th class="col-md-3">Title</th>
+                    <th class="col-md-2">City</th>
+                    <th class="col-md-1">Date</th>
+                    <th class="col-md-1">Time</th>
+                    <th class="col-md-6">Location</th>         
+                </tr>
+                <tbody id="meetingTable">
+                    <!--Content will go here-->
+                </tbody>                
+            </table>
+        </div>
+    </div>
+     
+</body>
+      
+<footer>
+    <!--your application script-->
+    <script src="js/list.js"></script>
+    <small><i>Copyright &copy; 2017 Information School, University of Washington</i></small>
+</footer>
+</html>
