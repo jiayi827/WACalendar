@@ -1,0 +1,141 @@
+<html>
+    <head>
+    <script src="https://www.gstatic.com/firebasejs/3.7.1/firebase.js"></script>
+    <script src="../lib/md5.min.js"></script>
+    </head>
+<body>
+<script>
+
+var config = {
+    apiKey: "AIzaSyALP5fHB0-3CLKdX71BXMw1iz96OR5PCFg",
+    authDomain: "wa-state-calendar.firebaseapp.com",
+    databaseURL: "https://wa-state-calendar.firebaseio.com",
+    storageBucket: "wa-state-calendar.appspot.com",
+    messagingSenderId: "478915424979"
+};
+firebase.initializeApp(config);
+
+// Get a reference to the database service
+var f = firebase.database();
+    
+var clientId = '478915424979-h87bie36l9psju2ouriukfeqppqd5t4n.apps.googleusercontent.com'; // Jiayi's google client id
+var apiKey = 'AIzaSyAonOoRIg_csFRkdSs89NVwEYT7L7iQpZ8'; // Jiayi's google calendar api key
+var userEmail = "3hrrtnm1h302qbbn5ulentqrhs@group.calendar.google.com"; //Leavenworth's calendar id
+var userTimeZone = "Los_Angeles"; 
+var maxRows = 50; //no. of events to add (for testing purpose)
+var calName = "Leavenworth Calendar"; //name of calendar (write what you want, doesn't matter)
+    
+var scopes = 'https://www.googleapis.com/auth/calendar';
+    
+// // Add a 0 to numbers
+// function padNum(num) {
+//     if (num <= 9) {
+//         return "0" + num;
+//     }
+//     return num;
+// }
+
+// // From 24h to Am/Pm
+// function AmPm(num) {
+//     if (num <= 12) { return "am " + num; }
+//     return "pm " + padNum(num - 12);
+// }
+//   
+
+// // num Month to String
+// function monthString(num) {
+//          if (num === "01") { return "JAN"; } 
+//     else if (num === "02") { return "FEB"; } 
+//     else if (num === "03") { return "MAR"; } 
+//     else if (num === "04") { return "APR"; } 
+//     else if (num === "05") { return "MAJ"; } 
+//     else if (num === "06") { return "JUN"; } 
+//     else if (num === "07") { return "JUL"; } 
+//     else if (num === "08") { return "AUG"; } 
+//     else if (num === "09") { return "SEP"; } 
+//     else if (num === "10") { return "OCT"; } 
+//     else if (num === "11") { return "NOV"; } 
+//     else if (num === "12") { return "DEC"; }
+// }
+
+// // from num to day of week
+// function dayString(num){
+//          if (num == "1") { return "mon" }
+//     else if (num == "2") { return "tue" }
+//     else if (num == "3") { return "wed" }
+//     else if (num == "4") { return "thu" }
+//     else if (num == "5") { return "fri" }
+//     else if (num == "6") { return "sat" }
+//     else if (num == "0") { return "sun" }
+// }
+
+
+// client CALL
+function handleClientLoad() {
+    gapi.client.setApiKey(apiKey);
+    checkAuth();
+}
+
+function checkAuth() {
+    gapi.auth.authorize({client_id: clientId, scope: scopes, immediate: true}, handleAuthResult);
+}
+
+function handleAuthResult(authResult) {
+    if (authResult) {
+        makeApiCall();
+    }
+}
+
+function makeApiCall() {
+    var today = new Date(); //today date
+    gapi.client.load('calendar', 'v3', function () {
+        var request = gapi.client.calendar.events.list({
+            'calendarId' : userEmail,
+            'timeZone' : userTimeZone, 
+            'singleEvents': true, 
+            'timeMin': today.toISOString(), //gathers only events not happened yet
+            'maxResults': maxRows, 
+            'orderBy': 'startTime'});
+    request.execute(function (resp) {
+            for (var i = 0; i < resp.items.length; i++) {
+                var item = resp.items[i];
+                var allDay = item.start.date? true : false;
+                var startDT = allDay ? item.start.date : item.start.dateTime;
+                var date = startDT.split("T")[0];  //split date from time
+                if (startDT.split("T").length > 1) {  // if has time
+                    var time = startDT.split("T")[1].substring(0,8); //get time
+                } 
+                var MD5string = md5("Leavenworth"+item.summary+date+time+location+item.description);
+
+                // avoid duplicates by using MD5string as index - key
+                var firebaseObj = firebase.database().ref().child('meeting').child(MD5string);
+                firebaseObj.set({                         // add data to firebase
+                    MD5index: MD5string,
+                    title: item.summary,
+                    city: "Leavenworth",
+                    date: date,
+                    time: time,
+                    location: "Leavenworth "+item.location,
+                    board:"",
+                    description: item.description,
+                    cancelOrNot:"No",
+                    contactEmail:"NA",
+                    contactName:"NA",
+                    contactPhone:"NA",
+                    weblink:"NA",
+                    summary: "NA",
+                    zipcode: 98826
+                });
+            }
+        });
+    });
+}
+</script>
+<script src='https://apis.google.com/js/client.js?onload=handleClientLoad'></script>
+    <div id='content'>
+    <h1 id='calendar' style="color:grey">LOADING . . . .</h1>
+    <ul id='events'></ul>
+    </div>
+    <h2 id='updated' style="font-size:16; color:grey">Updating . . . . .</h2>
+    </body>
+</html>
