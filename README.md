@@ -13,3 +13,7 @@ This website is about public meetings in Washington State, US. We have a public 
 ### About us
 * Team members: Jiayi, Tin-Chia, Yun
 * We are a group of graduate students at the University of Washington. This project is sponsored the the WA State government. Feel free to contact us if you are interested. All feedbacks and suggestions are greatly appreciated!
+
+
+
+
