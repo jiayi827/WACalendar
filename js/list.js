@@ -33,7 +33,7 @@ city.click(function() {
     .on('child_added', function(snapshot) {
       var data = snapshot.val();
       var row = table.insertRow(table.length);
-      if (data.cancelOrNot == "No" && data.city.toLowerCase() == search) {  // do not show meetings canceled
+      if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" && data.city.toLowerCase() == search) {  // do not show meetings canceled
         drawTable(data, row);
       }
   });
