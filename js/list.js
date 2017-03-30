@@ -14,14 +14,15 @@ var today = new Date();
 var firebaseObj = firebase.database().ref('meeting');
 
 firebaseObj.orderByChild('date')
-// .startAt(today)
   .on('child_added', function(snapshot) {
     var data = snapshot.val();
     var table = document.getElementById("meetingTable");
     var row = table.insertRow(table.length);
-    if (data.cancelOrNot == "No") {  // do not show meetings canceled
+    // console.log(today);
+    // console.log(new Date(Date.parse(data.date)));
+    if (Date.parse(data.date) >= today && data.cancelOrNot == "No" || data.cancelOrNot == "NA") {  // do not show meetings canceled
       drawTable(data, row);
-    }
+    } 
 });
 
 var city = $("#searchButtonCity");
@@ -48,7 +49,7 @@ subject.click(function() {
     .on('child_added', function(snapshot) {
       var data = snapshot.val();
       var row = table.insertRow(table.length);
-      if (data.cancelOrNot == "No" && data.title.toLowerCase().indexOf(search) != -1) {  // do not show meetings canceled
+      if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" && data.title.toLowerCase().indexOf(search) != -1) {  // do not show meetings canceled
         drawTable(data, row);
       }
   });
@@ -69,7 +70,7 @@ subject.click(function() {
     .on('child_added', function(snapshot) {
       var data = snapshot.val();
       var row = table.insertRow(table.length);
-      if (data.cancelOrNot == "No" && Date.parse(data.date) >= startDate && Date.parse(data.date) <= endDate) {  // do not show meetings canceled
+      if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" && Date.parse(data.date) >= startDate && Date.parse(data.date) <= endDate) {  // do not show meetings canceled
         drawTable(data, row);
       }
   });
