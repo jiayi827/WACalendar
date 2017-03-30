@@ -25,56 +25,88 @@ firebaseObj.orderByChild('date')
     } 
 });
 
-var city = $("#searchButtonCity");
-city.click(function() {
+var search = $("#searchButton");
+search.click(function() {
   var table = document.getElementById("meetingTable");
   table.innerHTML = "";
-  var search = $("#searchBoxCity").val().toLowerCase();
-  firebaseObj.orderByChild('date')
-    .on('child_added', function(snapshot) {
-      var data = snapshot.val();
-      var row = table.insertRow(table.length);
-      if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" && data.city.toLowerCase() == search) {  // do not show meetings canceled
-        drawTable(data, row);
-      }
-  });
-});
-
-var subject = $("#searchButtonSubject");
-subject.click(function() {
-  var table = document.getElementById("meetingTable");
-  table.innerHTML = "";
-  var search = $("#searchBoxSubject").val().toLowerCase();
-  firebaseObj.orderByChild('date')
-    .on('child_added', function(snapshot) {
-      var data = snapshot.val();
-      var row = table.insertRow(table.length);
-      if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" && data.title.toLowerCase().indexOf(search) != -1) {  // do not show meetings canceled
-        drawTable(data, row);
-      }
-  });
-})
-
-var subject = $("#searchButtonDate");
-subject.click(function() {
-  var table = document.getElementById("meetingTable");
-  table.innerHTML = "";
-
+  var searchCity = $("#searchBoxCity").val().toLowerCase();
+  var searchSubject = $("#searchBoxSubject").val().toLowerCase();
   var startDate = new Date();
   var endDate = new Date();
 
   startDate = new Date(document.getElementById("daterange").value.substring(0,10));
   endDate = new Date(document.getElementById("daterange").value.substring(13,23));
 
+  console.log(searchSubject);
+
   firebaseObj.orderByChild('date')
     .on('child_added', function(snapshot) {
       var data = snapshot.val();
       var row = table.insertRow(table.length);
-      if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" && Date.parse(data.date) >= startDate && Date.parse(data.date) <= endDate) {  // do not show meetings canceled
-        drawTable(data, row);
+      console.log(data.title.toLowerCase());
+      console.log(data.title.toLowerCase().indexOf(searchSubject));
+      if ((data.cancelOrNot == "No" || data.cancelOrNot == "NA")
+        && ((data.city.toLowerCase() == searchCity) || searchCity.length == 0)
+        && ((data.title.toLowerCase().indexOf(searchSubject) != -1) || searchSubject.length == 0)
+        && Date.parse(data.date) >= startDate && Date.parse(data.date) <= endDate)
+        {
+          drawTable(data, row);
       }
-  });
+    })
 })
+
+// var city = $("#searchButtonCity");
+// city.click(function() {
+//   var table = document.getElementById("meetingTable");
+//   table.innerHTML = "";
+//   var search = $("#searchBoxCity").val().toLowerCase();
+//   firebaseObj.orderByChild('date')
+//     .on('child_added', function(snapshot) {
+//       var data = snapshot.val();
+//       var row = table.insertRow(table.length);
+//       if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" 
+//           && data.city.toLowerCase() == search) {  // do not show meetings canceled
+//         drawTable(data, row);
+//       }
+//   });
+// });
+
+// var subject = $("#searchButtonSubject");
+// subject.click(function() {
+//   var table = document.getElementById("meetingTable");
+//   table.innerHTML = "";
+//   var search = $("#searchBoxSubject").val().toLowerCase();
+//   firebaseObj.orderByChild('date')
+//     .on('child_added', function(snapshot) {
+//       var data = snapshot.val();
+//       var row = table.insertRow(table.length);
+//       if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" 
+//           && data.title.toLowerCase().indexOf(search) != -1) {  // do not show meetings canceled
+//         drawTable(data, row);
+//       }
+//   });
+// })
+
+// var subject = $("#searchButtonDate");
+// subject.click(function() {
+//   var table = document.getElementById("meetingTable");
+//   table.innerHTML = "";
+
+//   var startDate = new Date();
+//   var endDate = new Date();
+
+//   startDate = new Date(document.getElementById("daterange").value.substring(0,10));
+//   endDate = new Date(document.getElementById("daterange").value.substring(13,23));
+
+//   firebaseObj.orderByChild('date')
+//     .on('child_added', function(snapshot) {
+//       var data = snapshot.val();
+//       var row = table.insertRow(table.length);
+//       if (data.cancelOrNot == "No" || data.cancelOrNot == "NA" && Date.parse(data.date) >= startDate && Date.parse(data.date) <= endDate) {  // do not show meetings canceled
+//         drawTable(data, row);
+//       }
+//   });
+// })
 
 var reset = $("#resetButton");
 reset.click(function() {
