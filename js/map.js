@@ -32,24 +32,22 @@ messagingSenderId: "478915424979"
 firebase.initializeApp(config);
 
 var today = new Date();
+var future = new Date();  
+future.setDate(future.getDate() + 30);  // 30 days later
+
+console.log(today.getDate() + 30);
 var firebaseObj = firebase.database().ref('meeting');
 
 firebaseObj.orderByChild('date')
 // .startAt(today)
     .on('child_added', function(snapshot) {
-      var data = snapshot.val();
+        var data = snapshot.val();
       // show meetings happen 15 days from today
-      if ((data.cancelOrNot == "No" || data.cancelOrNot == "NA")  // exclude meetings canceled
-<<<<<<< HEAD
-      && Date.parse(data.date) >= today
-      && Date.parse(data.date) < today.setDate(today.getDate() + 30)) { 
-=======
-      && Date.parse(data.date) < today.setDate(today.getDate() + 15)
-      && Date.parse(data.date) >= today.setDate(today.getDate()) { 
->>>>>>> origin/master
-       // console.log(Date.parse(data.date));
-        toMap(data);
-      }
+        if ((data.cancelOrNot == "No" || data.cancelOrNot == "NA")  // exclude meetings canceled
+        && Date.parse(data.date) >= today
+        && Date.parse(data.date) < future) {
+            toMap(data);
+        }
 });
 
 
