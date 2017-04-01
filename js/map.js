@@ -41,7 +41,7 @@ firebaseObj.orderByChild('date')
       // show meetings happen 15 days from today
       if ((data.cancelOrNot == "No" || data.cancelOrNot == "NA")  // exclude meetings canceled
       && Date.parse(data.date) < today.setDate(today.getDate() + 15)
-      && Date.parse(data.date) >= today) { 
+      && Date.parse(data.date) >= today.setDate(today.getDate()) { 
        // console.log(Date.parse(data.date));
         toMap(data);
       }
