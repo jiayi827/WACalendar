@@ -20,7 +20,7 @@ firebaseObj.orderByChild('date')
     var row = table.insertRow(table.length);
     // console.log(today);
     // console.log(new Date(Date.parse(data.date)));
-    if (Date.parse(data.date) >= today && data.cancelOrNot == "No" || data.cancelOrNot == "NA") {  // do not show meetings canceled
+    if (Date.parse(data.date) >= today && (data.cancelOrNot == "No" || data.cancelOrNot == "NA")) {  // do not show meetings canceled
       drawTable(data, row);
     } 
 });
