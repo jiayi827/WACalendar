@@ -1,0 +1,249 @@
+<html>
+    <head>
+        <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+        <script src="md5.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src='http://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.4.5/js/bootstrapvalidator.min.js'></script>
+
+
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+        <!-- Include Required Prerequisites -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" />
+           
+        <!-- Include Date Range Picker -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+    </head>
+
+<style>
+    #addBoxCity {
+        max-width: 250px;
+    }
+    #addBoxTitle {
+        max-width: 500px;
+    }
+    #addBoxCancel {
+        max-width: 150px;
+    }
+    #addBoxDescription {
+        max-width: 1000px;
+    }
+    #addBoxCommittee {
+        max-width: 400px;
+    }
+    #addBoxStartTime {
+        max-width: 150px;
+    }
+    #addBoxEndTime {
+        max-width: 150px;
+    }
+    #addBoxLocation {
+        max-width: 600px;
+    }
+    #addBoxZip {
+        max-width: 150px;
+    }
+    #addBoxPerson {
+        max-width: 200px;
+    }
+    #addBoxPhone {
+        max-width: 200px;
+    }
+    #addBoxEmail {
+        max-width: 250px;
+    }
+    #addBoxAgenda {
+        max-width: 500px;
+    }
+    input[type=text]::-webkit-search-cancel-button {
+       -webkit-appearance: searchfield-cancel-button;
+    }
+</style>
+
+<body>
+    <div class="container clearfix">
+        <h2><i class="meetingslist" style="color:#55acee"></i>Add Your Meetings</h2>
+        <br>
+
+        <form class="form-horizontal" action="" onsubmit="return validateForm()" method="post" name="add_form">
+            <div class="col-sm-12 col-md-12 selectContainer" style="margin-bottom:1em">
+                <p>City: (*required*)</p>
+<!--                     <input class="form-control" name="addCity" type="text" placeholder="E.g. Seattle" id="addBoxCity"> -->
+                        <div class="input-group">
+                            <select name="addCity" class="form-control selectpicker" >
+                              <option value=" " >Please select your city</option>
+                              <option>Bothell</option>
+                              <option>Everett</option>
+                              <option>Issaquah</option>
+                              <option>Kirkland</option>
+                              <option>Lake Stevens</option>
+                              <option>Leavenworth</option>
+                              <option>Mount Vernon</option>
+                              <option>Olympia</option>
+                              <option>Seattle</option>
+                              <option>Shoreline</option>
+                            </select>
+                        </div>
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Title: (*required*)</p>
+                <input class="form-control" name="addTitle" type="text" placeholder="E.g. Land Use Policy Brief" id="addBoxTitle">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Canceled? (*required*)</p>
+                    <label><input type="radio" name="radioButton" value="Yes">&nbsp;Yes&nbsp;&nbsp;</label>
+                    <label><input type="radio" name="radioButton" value="No" checked>&nbsp;No</label>
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Committee: </p>
+                <input class="form-control" name="addCommittee" type="text" placeholder="E.g. Budget Committee / Full Board" id="addBoxCommittee">
+            </div>
+
+            <div class="col-sm-3 col-md-3" style="margin-bottom:1em">
+                <p>Pick Date: (*required*)</p>
+                  <input class="form-control" type="text" id="daterange" type="search"/>
+                      <script type="text/javascript">
+                      $(function() {
+                          $('input[id="daterange"]').daterangepicker({
+                            singleDatePicker: true,
+                            showDropdowns: true});
+                      });
+                      </script>
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Start Time: (*required*)</p>
+                <input class="form-control" name="addStartTime" type="text" placeholder="E.g. 2:30 pm" id="addBoxStartTime">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>End Time: </p>
+                <input class="form-control" name="addEndTime" type="text" placeholder="E.g. 4:30 pm" id="addBoxEndTime">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Location: (*required*)</p>
+                <input class="form-control" name="addLocation" type="text" placeholder="E.g. 123 5th Ave Kirkland, WA" id="addBoxLocation">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Zipcode: </p>
+                <input class="form-control" name="addZip" type="text" placeholder="E.g. 98104" id="addBoxZip">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Description: </p>
+                <input class="form-control" name="addDescription" type="text" placeholder="Provide a short description of your meeting..." id="addBoxDescription">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Contact Person: </p>
+                <input class="form-control" name="addPerson" type="text" placeholder="E.g. Joe Smith" id="addBoxPerson">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Contact Phone: </p>
+                <input class="form-control" name="addPhone" type="text" placeholder="E.g. 206-000-0000" id="addBoxPhone">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:1em">
+                <p>Contact Email: </p>
+                <input class="form-control" name="addEmail" type="text" placeholder="E.g. joesmith@seattle.gov" id="addBoxEmail">
+            </div>
+
+            <div class="col-sm-12 col-md-12" style="margin-bottom:2em">
+                <p>Link to Agenda: </p>
+                <input class="form-control" name="addAgenda" type="text" placeholder="Provide your link to meeting agenda..." id="addBoxAgenda">
+            </div>
+        <div id="addMeeting" class="col-sm-12" style="margin-bottom:2em">
+            <button type="submit" class="btn btn-primary" id="addButton">Add Meeting</button>
+        </div> 
+    </div>
+
+</body>
+
+<script>
+
+    // Initialize Fireabase
+    var config = {
+        apiKey: "AIzaSyALP5fHB0-3CLKdX71BXMw1iz96OR5PCFg",
+        authDomain: "wa-state-calendar.firebaseapp.com",
+        databaseURL: "https://wa-state-calendar.firebaseio.com",
+        projectId: "wa-state-calendar",
+        storageBucket: "wa-state-calendar.appspot.com",
+        messagingSenderId: "478915424979"
+      };
+    firebase.initializeApp(config);
+    var f = firebase.database().ref().child('meeting');
+
+    function validateForm() {
+        var city = document.forms["add_form"]["addCity"].value;
+        if (city.length <= 3) {
+            alert("City cannot be empty");
+            return false;
+        }
+
+        var title = document.getElementById("addBoxTitle").value;
+        if (title == "") {
+            alert("Title cannot be empty");
+            return false;
+        }
+
+        var startTime = document.getElementById("addBoxStartTime").value;
+        if (startTime == "") {
+            alert("Time cannot be empty");
+            return false;
+        }
+
+        var location = document.getElementById("addBoxLocation").value;
+        if (location == "") {
+            alert("Location cannot be empty");
+            return false;
+        }
+
+        var date = document.getElementById("daterange").value;
+        var cancel = $('input[name="radioButton"]:checked').val();
+        var committee = document.getElementById("addBoxCommittee").value;
+        var description = document.getElementById("addBoxDescription").value;
+        var person = document.getElementById("addBoxPerson").value;
+        var email = document.getElementById("addBoxEmail").value;
+        var phone = document.getElementById("addBoxPhone").value;
+        var link = document.getElementById("addBoxAgenda").value;
+        var zipcode = document.getElementById("addBoxZip").value;
+
+        var MD5string = md5(city+title+date+startTime+location+cancel);
+
+        var firebaseObj = f.child(MD5string);
+        firebaseObj.set({                         // add data to firebase
+            MD5index: MD5string,
+            title: title,
+            city: city,
+            date: date,
+            time: startTime,
+            location: location,
+            board: committee,
+            description: description,
+            cancelOrNot: cancel,
+            contactEmail: email,
+            contactName: person,
+            contactPhone: phone,
+            weblink: link,
+            summary: "NA",
+            zipcode: zipcode
+        });
+    }
+
+</script>
+
+</html>
